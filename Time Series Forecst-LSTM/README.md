@@ -9,7 +9,7 @@ Implementation :-
 Time series forecast can  be done using statistical methods but here we approched
 to use neural network to build a time series forecast model.
  After initial research, we found it to go with LSTM model which is good at detecting
- sequences and can  be used for time series forecasts
+ sequences and can  be used for time series forecasts.
 
  I have referred [Time Series Forecast Using LStM](https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/)
  Tutorial from Machine Learning mastery website which has explaned explicitly in

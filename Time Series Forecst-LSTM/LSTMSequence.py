@@ -10,22 +10,21 @@ Evaluating the static LSTM model on the test data.
 Report the performance of the forecasts.
 
 """
-
-# Load Librraies
-import pandas as pd
-from matplotlib import pyplot
+## Load Librraies
+import pickle
 import numpy as np
+import pandas as pd
+from math import sqrt
+from matplotlib import pyplot
+from keras.models import Sequential
+from keras.layers import LSTM,Dense
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.layers import LSTM,Dense
-from math import sqrt
-import pickle
 
-# Definitions
+## Definitions
 
-# Frame a sequence as a supervised learning problem
+## Frame a sequence as a supervised learning problem
 def timeseries_to_supervised(data, lag=1):
     df = pd.DataFrame(data)
     columns = [df.shift(i) for i in range(1, lag+1)]
@@ -34,7 +33,7 @@ def timeseries_to_supervised(data, lag=1):
     df.fillna(0, inplace=True)
     return df
 
-#Removing trend- Making Stationary
+## Removing trend- Making Stationary
 def difference(dataset, interval=1):
     diff = list()
     for i in range(interval, len(dataset)):
@@ -42,11 +41,11 @@ def difference(dataset, interval=1):
         diff.append(value)
     return pd.Series(diff)
 
-# Invert diffferenced value - Get Orignial Value
+## Invert diffferenced value - Get Orignial Value
 def inverse_difference(history, yhat, interval=1):
 	return yhat + history[-interval]
 
-# Scale Data
+## Scale Data
 def scale(data):
     scaler = MinMaxScaler(feature_range=(-1, 1))
     scaler = scaler.fit(data)
@@ -54,7 +53,7 @@ def scale(data):
     scaled_X = scaler.transform(data)
     return scaler,scaled_X
 
-# Inverse scailing for forecasted value
+## Inverse scailing for forecasted value
 def inverse_scale(scaler,X,value):
     new_row = [x for x in X] + [value]
     array = np.array(new_row)
@@ -62,7 +61,7 @@ def inverse_scale(scaler,X,value):
     inverted = scaler.inverse_transform(array)
     return inverted[0,-1]
 
-# Fit an lstm network to training data
+## Fit an lstm network to training data
 def fit_lstm(train,batch_size,nb_epochs,neurons):
     X,y = train[:,0:-1],train[:,-1]
     X = X.reshape(X.shape[0],1,X.shape[1])
@@ -75,12 +74,13 @@ def fit_lstm(train,batch_size,nb_epochs,neurons):
         model.reset_states()
     return model
 
-# Make a one-step forecast
+## Make a one-step forecast
 def forecast_lstm(model,batch_size,X):
     X=X.reshape(1,1,len(X))
     yhat=model.predict(X,batch_size=batch_size)
     return yhat[0,0]
 
+## Transform data and do prediction
 def predict_data(data,scaler,model):
     data=data.reshape(data.shape[0],1)
     raw_values=data
@@ -96,35 +96,36 @@ def predict_data(data,scaler,model):
         print(yhat)
     return yhat
 
-# Load Data
+## Load Data
 data = pd.read_csv("data.csv",header=None,names=['col1','col2','col3','col4','col5'])
 np.random.seed(1337)
 
-# Differenced Series - Stationary Series
+## Differenced Series - Stationary Series
 raw_values = data.col5.values
 raw_values = raw_values.reshape(raw_values.shape[0],1)
 differenced = difference(raw_values, 1)
 
-# ransform data to supervised data
+## Transform data to supervised data
 tsupervised = timeseries_to_supervised(differenced, 1)
 supervised_values= tsupervised.values
 
-# Transform scale
+## Transform scale
 scaler,data = scale(supervised_values)
 pickle.dump(scaler,open("scaler","wb"))
-#Split Data
+
+## Split Data
 Len=len(data)
 validation_size=0.1
 Size = int(validation_size*Len)
 train, test = data[:-Size],data[-Size:]
 
-# Fit the model
+## Fit the model
 lstm_model=fit_lstm(train,1,10,1)
 lstm_model.save('my_model.h5')
-#forecast entire trainig set
+## Forecast entire trainig set
 #lstm_model.predict(train[:,0].reshape(len(train),1,1),batch_size=1)
 
-#walk forward validation on test data
+## walk forward validation on test data
 predictions=list()
 for i in range(len(test)):
     #make one - step forecast
@@ -139,13 +140,12 @@ for i in range(len(test)):
     expected=raw_values[len(train) + i + 1]
     #print('predicted=%f, Expected=%f' % (yhat,expected))
 
-# report performance
+## report performance
 rmse = sqrt(mean_squared_error(raw_values[-Size:],predictions))
 print('Test RMSE: %0.3f' % rmse)
-#line plot of observed vs predicted
+
+## line plot of observed vs predicted
 pyplot.plot(raw_values[-Size:])
 pyplot.plot(predictions)
 pyplot.legend(['desired','predicted'])
 pyplot.show()
-
-

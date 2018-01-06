@@ -8,9 +8,10 @@ Implementation:-
 We have a Edge device which is continuously monitored. We have to early detect the possible failure of machine and alert the system.Approach is to do time series forecast using Deep Learning LSTM model where it will  predict the future value beforehand and then using classifier to decide to give alert or not.
 
 Steps to follow :-  
-1.Build a LSTM model to predict future values. Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Time%20Series%20Forecst-LSTM)                                                          2.Build a classifier to accurately decide/classify (Alert/ No Alert). Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Logistic%20Classifier)  
-3.Integration  
-4.Modification  
+1. Build a LSTM model to predict future values. Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Time%20Series%20Forecst-LSTM)  
+2. Build a classifier to accurately decide/classify (Alert/ No Alert). Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Logistic%20Classifier)  
+3. Integration  
+4. Modification  
 
 Integration :-  
 Soo we had this LSTM model and a classifier model ready. We wrote another code which loaded both of this model and configure input/ output accordingly. We got a single current memory consumption value as our input. We passed it to LSTM model which predicted the future value and passed the predicted value to classifier. This classifier decide if value is above prescribed machine failure threshold or not and generates status describing Alert or No Alert. Refer Prediction_final.py.

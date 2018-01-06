@@ -1,4 +1,4 @@
-# Early-Warning-Fault-Detection
+# Fault Prediction
 Problem Statement :- Build a Tensorflow Model to do early detection of machine failure ( on basis of memory consumption)
 
 High Level Requirement :- Python 3.6,Tensorflow 1.4, sklearn, keras
@@ -8,8 +8,7 @@ Implementation:-
 We have a Edge device which is continuously monitored. We have to early detect the possible failure of machine and alert the system.Approach is to do time series forecast using Deep Learning LSTM model where it will  predict the future value beforehand and then using classifier to decide to give alert or not.
 
 Steps to follow :-  
-1.Build a LSTM model to predict future values. Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Time%20Series%20Forecst-LSTM)
-2.Build a classifier to accurately decide/classify (Alert/ No Alert). Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Logistic%20Classifier)  
+1.Build a LSTM model to predict future values. Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Time%20Series%20Forecst-LSTM)  2.Build a classifier to accurately decide/classify (Alert/ No Alert). Refer [here](https://github.com/RonakDedhiya/Early-Warning-Fault-Detection/tree/master/Logistic%20Classifier)  
 3.Integration  
 4.Modification  
 
@@ -26,3 +25,4 @@ The Data will be continuously monitored for any alerts and retrained in case of 
 For detecting False Alarm/ No alarm, an logic is written and incorporated in predict_data function. On retraining event, retrain function is called when conditions become true. This retrain function detects the lowest value for which machine got off and adds dummy data accordingly to have on/off labels almost equal in number for proper training. This data augmentation is done in retrain code wherein ahead it is trained with logistic regression method.  
 
 After retraining, model runs with new threshold.  
+RestPrediction.py is similar code as prediction_final.py but additionally with flask to allow it to be hit from the API's

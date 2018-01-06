@@ -82,6 +82,7 @@ def forecast_lstm(model,batch_size,X):
 
 ## Transform data and do prediction
 def predict_data(data,scaler,model):
+    ## Data Transformation
     data=data.reshape(data.shape[0],1)
     raw_values=data
     data=difference(data,1)
@@ -90,7 +91,9 @@ def predict_data(data,scaler,model):
     for i in range(len(data)):
         X= data[i,0]
         X=X.reshape(1,1,1)
+        ## Predict output
         yhat = model.predict(X,1)
+        ## inverse_transform output
         yhat=inverse_scale(scaler,X,yhat)
         yhat=inverse_difference(raw_values,yhat,len(data)+1-i)
         print(yhat)

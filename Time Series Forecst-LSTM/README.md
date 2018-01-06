@@ -19,17 +19,17 @@ to use neural network to build a time series forecast model.
  Please refer the tutorial [Link](https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/) to follow on LSTM.
  Codes are annotated with comments for better understanding.
 
-Steps to be Followed :-
-1.Load the dataset from CSV file.
-2.Transform the dataset to make it suitable for the LSTM model, including:
-3.Transforming the data to a supervised learning problem.
-4.Transforming the data to be stationary.
-5.Transforming the data so that it has the scale -1 to 1.
-6.Fitting a stateful LSTM network model to the training data.
-7.Evaluating the static LSTM model on the test data.
-8.Report the performance of the forecasts.
+Steps to be Followed :-  
+1.Load the dataset from CSV file.  
+2.Transform the dataset to make it suitable for the LSTM model    
+3.Transforming the data to a supervised learning problem.  
+4.Transforming the data to be stationary.  
+5.Transforming the data so that it has the scale -1 to 1.  
+6.Fitting a stateful LSTM network model to the training data.  
+7.Evaluating the static LSTM model on the test data.  
+8.Report the performance of the forecasts.  
 
-This completes the training part.
+This completes the training part.  
 For Using the trained model directly, I have wriiten another function predict_data which takes in
 data and model. Perform all preprocessing/ transformation of data, Loads the model and gives
 the forecasted output. Output is inversed/ transformed to original form.

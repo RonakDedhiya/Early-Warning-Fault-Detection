@@ -1,5 +1,5 @@
 ## Import Library
-import _pickle as cpickle
+import pickle
 import time
 import numpy as np
 import pandas as pd
@@ -124,7 +124,7 @@ def predict_data(data,scaler,model):
 def predict_alert(data):
     global send_event
     ## Load Model
-    clf=cpickle.load(open("clf","rb"))
+    clf=pickle.load(open("clf","rb"))
     ## Predict Class
     y_pred=clf.predict(data)
     if np.array(y_pred[0]) == 0 :
@@ -171,12 +171,12 @@ def retrain(data):
     clf = sklearn.linear_model.LogisticRegressionCV()
     clf.fit(X,Y)
     ## Save the model
-    cpickle.dump(clf,open("clf","wb"))
+    pickle.dump(clf,open("clf","wb"))
     print("*"*33,"Retraining completed","*"*33)
 
 ## Loading Model( LSTM Model, Classifier Model )
 lstm_model = load_model('my_model.h5')
-scaler=cpickle.load(open("scaler","rb"))
+scaler=pickle.load(open("scaler","rb"))
 
 ## Load input
 data=pd.read_csv("test_data.csv",header=None,names=["cpu_util"])

@@ -1,5 +1,5 @@
 ## Import Library
-import pickle
+import _pickle as cpickle
 import time
 import numpy as np
 import pandas as pd
@@ -22,25 +22,32 @@ import paho.mqtt.client as mqtt
 ##### Create Event #################################
 
 # The callback for when the client receives a CONNACK response from the server.
-def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
 
-
-# The callback for when a PUBLISH message is received from the server.
-def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
 
 def Create_Event():
-    payload='{"customer_id":"7877","project_id":"MI_WM_EAST_WINDMILL_FARM","asset_id":"MI_WM_EDGEG1","event_name":"Device Failure","event_description":"Device is about to fail;","event_type":"Failure Prediction","severity":"high","status":"open","created_date":"2017-12-20 12:45:58.786"}'
-    client = mqtt.Client()
-    client.username_pw_set("mi_iot_admin@atos.net","Miadmin@1234")
-    client.on_connect = on_connect
-    client.publish("codexidm_iot_mi_event_data",payload)
-    client.subscribe("codexidm_iot_mi_event_data")
-    client.connect("129.185.160.85", 1884, 60)
-    client.on_message = on_message
-    client.loop(30)
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        client.subscribe("codexidm_iot_mi_event_data")
 
+    # The callback for when a PUBLISH message is received from the server.
+    def on_message(client, userdata, msg):
+        print(msg.topic+" "+str(msg.payload))
+
+    print("1 ---->")
+    payload='{"customer_id":"7877","project_id":"MI_WM_EAST_WINDMILL_FARM","asset_id":"MI_WM_EDGEG1","event_name":"Device Failure Prediction","event_description":"Device will fail Take Action","event_type":"Failure Prediction","severity":"high","status":"open","created_date":"2018-01-19 21:10:58.786"}'
+    print("2 ---->")
+    client = mqtt.Client()
+    print("3 ---->")
+    client.connect("129.185.160.85", 1884, 60) 
+    print("4 ---->")
+    client.on_connect = on_connect
+    print("5---->")
+    client.on_message = on_message
+    #client.connect("129.185.160.85", 1884, 60)
+    print("6---->")
+    client.loop(timeout=59)
+    print("7---->")
+    client.publish("codexidm_iot_mi_event_data",payload)
 
 
 #################################################
@@ -124,7 +131,7 @@ def predict_data(data,scaler,model):
 def predict_alert(data):
     global send_event
     ## Load Model
-    clf=pickle.load(open("clf","rb"))
+    clf=cpickle.load(open("clf","rb"))
     ## Predict Class
     y_pred=clf.predict(data)
     if np.array(y_pred[0]) == 0 :
@@ -171,12 +178,12 @@ def retrain(data):
     clf = sklearn.linear_model.LogisticRegressionCV()
     clf.fit(X,Y)
     ## Save the model
-    pickle.dump(clf,open("clf","wb"))
+    cpickle.dump(clf,open("clf","wb"))
     print("*"*33,"Retraining completed","*"*33)
 
 ## Loading Model( LSTM Model, Classifier Model )
 lstm_model = load_model('my_model.h5')
-scaler=pickle.load(open("scaler","rb"))
+scaler=cpickle.load(open("scaler","rb"))
 
 ## Load input
 data=pd.read_csv("test_data.csv",header=None,names=["cpu_util"])
@@ -193,4 +200,3 @@ zero_count=0
 
 ## Calling Prediction - Result :- Early alert or no alert
 predict_data(raw_values,scaler,lstm_model)
-

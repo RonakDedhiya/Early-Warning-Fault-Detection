@@ -21,7 +21,7 @@ Y = Y.values.reshape(-1,1)
 
 ## Model Training
 clf = sklearn.linear_model.LogisticRegressionCV()
-clf.fit(X,Y)
+clf.fit(X,Y.values.ravel())
 y_pred=clf.predict(159)
 
 ## Save the Model

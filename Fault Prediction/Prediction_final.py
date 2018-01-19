@@ -41,7 +41,7 @@ def inverse_difference(history, yhat, interval=1):
 ## Scale Data
 def scale(data):
     scaler = MinMaxScaler(feature_range=(-1, 1))
-    scaler = scaler.fit(data)
+    scaler = scaler.fit(data.astype('float32'))
     data = data.reshape(data.shape[0],data.shape[1])
     scaled_X = scaler.transform(data)
     return scaler,scaled_X
@@ -72,8 +72,8 @@ def predict_data(data,scaler,model):
         ## Inverse Transformation
         yhat=inverse_scale(scaler,X,yhat)
         yhat=inverse_difference(raw_values,yhat,len(data)-i)
-        print("Current Value is:",raw_values[i],end=' ')
-        print("Naxt value could be ",yhat, end=' ')
+        print("Current Value is:",raw_values[i])
+        print("Naxt value could be ",yhat)
         ## Calling Classifier to decide device on or off
         predict_alert(int(yhat))
         val=raw_values[i]

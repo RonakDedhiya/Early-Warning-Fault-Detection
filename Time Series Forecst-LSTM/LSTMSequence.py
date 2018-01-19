@@ -48,7 +48,7 @@ def inverse_difference(history, yhat, interval=1):
 ## Scale Data
 def scale(data):
     scaler = MinMaxScaler(feature_range=(-1, 1))
-    scaler = scaler.fit(data)
+    scaler = scaler.fit(data.astype('float32'))
     data = data.reshape(data.shape[0],data.shape[1])
     scaled_X = scaler.transform(data)
     return scaler,scaled_X

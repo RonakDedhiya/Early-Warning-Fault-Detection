@@ -148,7 +148,7 @@ rmse = sqrt(mean_squared_error(raw_values[-Size:],predictions))
 print('Test RMSE: %0.3f' % rmse)
 
 ## line plot of observed vs predicted
-pyplot.plot(raw_values[-Size:])
-pyplot.plot(predictions)
-pyplot.legend(['desired','predicted'])
-pyplot.show()
+#pyplot.plot(raw_values[-Size:])
+#pyplot.plot(predictions)
+#pyplot.legend(['desired','predicted'])
+#pyplot.show()

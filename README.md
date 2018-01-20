@@ -1,5 +1,5 @@
 # Early-Warning-Fault-Detection  
-Problem statement/Background:- Build a Tensorflow Model to do early detection of machine failure ( on basis of memory consumption)  
+Problem statement/Background:- Build a Tensorflow Model to do early detection of machine failure ( on basis of memory consumption)  With proper machine monitoring, we could achieve preventive maintenance, improved safety and cost savings.
 
 High Level Requirement :-Python 3.6,Tensorflow 1.4, sklearn, keras  
 

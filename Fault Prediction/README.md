@@ -47,23 +47,24 @@ MQTT is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol. I
 
 We wrote a small code in python to send event using MQTT protocol.
 
-steps:-
-1.pip install paho-mqtt.
-2.This package provides a client class which enable applications to connect to an MQTT broker to publish messages, and to subscribe to topics and receive published messages. It also provides some helper functions to make publishing one off messages to an MQTT server very straightforward.
-3.We have to first make a payload, which is nothing but a json packet and we have to include all information required to register an event.
-payload={  
-                  "customer_id" : "####",
-                  "Project_id" : "MI_WM_EAST_WINDMILL_FARM",
-                   "asset_id" : "MI_WM_EDGEG1",
-                   "event_name":"Device Failure Prediction",
-                   "event_description":"Device will fail Take Action",
-                   "event_type":"Failure Prediction",
-                   "severity":"high",
-                   "status":"open",
-                    "created_date":"2018-01-19 21:10:58.786"
-                }
-4.Invoke MQTT Client and connect to host.
-client=mqtt.client()
-client.connect("host_ip",1884,60)
-5. And finally publish payload to assigned topic
-client.publish("codexidm_iot_mi_event_data",payload)
+steps:-  
+1.pip install paho-mqtt.  
+2.This package provides a client class which enable applications to connect to an MQTT broker to publish messages, and to subscribe to topics and receive published messages. It also provides some helper functions to make publishing one off messages to an MQTT server very straightforward.  
+3.We have to first make a payload, which is nothing but a json packet and we have to include all information required to register an event.  
+payload={    
+                  "customer_id" : "####",  
+                  "Project_id" : "MI_WM_EAST_WINDMILL_FARM",  
+                   "asset_id" : "MI_WM_EDGEG1",  
+                   "event_name":"Device Failure Prediction",  
+                   "event_description":"Device will fail Take Action",  
+                   "event_type":"Failure Prediction",  
+                   "severity":"high",  
+                   "status":"open",  
+                    "created_date":"2018-01-19 21:10:58.786"  
+                }  
+4.Invoke MQTT Client and connect to host.  
+client=mqtt.client()  
+client.connect("host_ip",1884,60)  
+5. And finally publish payload to assigned topic  
+client.publish("codexidm_iot_mi_event_data",payload)  
+  

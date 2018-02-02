@@ -3,7 +3,9 @@ Problem Statement :- Build a Tensorflow Model to do early detection of machine f
 
 High Level Requirement :- Python 3.6,Tensorflow 1.4, sklearn, keras
 
-Implementation:-  
+Implementation:- 
+
+<img src='/Fault Prediction/Image.PNG'>
 
 We have a Edge device which is continuously monitored. We have to early detect the possible failure of machine and alert the system.Approach is to do time series forecast using Deep Learning LSTM model where it will  predict the future value beforehand and then using classifier to decide to give alert or not.
 
@@ -29,7 +31,7 @@ After retraining, model runs with new threshold.
 RestPrediction.py is similar code as prediction_final.py but additionally with flask to allow it to be hit from the API's
 
 
-MQTT :-
+# MQTT :-
 
 Problem Statement :- Integrate Predictive Incident Management Model with Codex IoT.
 

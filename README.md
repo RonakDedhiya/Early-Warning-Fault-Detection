@@ -5,6 +5,8 @@ High Level Requirement :-Python 3.6,Tensorflow 1.4, sklearn, keras
 
 Implementation:-  
 
+<img src='/Fault Prediction/Image.PNG'>
+
 We have a Edge device which is continuously monitored. We have to early detect the possible failure of machine and alert the system.Approach is to do time series forecast using Deep Learning LSTM model where it will  predict the future value beforehand and then using classifier to decide to give alert or not.  
 
 Steps to follow :-  
